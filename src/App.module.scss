@@ -1,0 +1,251 @@
+$size: 90vmin;
+@font-face {
+  font-family: "digital-clock-font";
+  src: url("./fonts/digital-7\ \(mono\).ttf");
+}
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  min-width: 307px;
+  color: red;
+  font: {
+    family: "digital-clock-font";
+  }
+
+  .btn-wrapper {
+    position: absolute;
+    top: 0;
+    left: -$size;
+    right: 0;
+    bottom: $size / 3;
+    width: 0px;
+    height: 0px;
+    margin: auto;
+    .btn {
+      color: black;
+      cursor: pointer;
+      position: absolute;
+      width: $size / 10;
+      height: $size / 20;
+      line-height: $size / 20;
+      top: calc(($size / -20) - 3px);
+      left: $size / 25;
+      transition: transform 0.3s;
+      background-color: rgb(196, 196, 177);
+      border-radius: 5px 5px 0 0;
+      text-align: center;
+      font-size: $size / 30;
+      &.btn--alarm {
+        left: calc($size / 25 + $size / 10 + 2vmin);
+      }
+      &.btn--alarm-off {
+        pointer-events: none;
+        transform: translateY($size / 30);
+        background-color: darkred;
+        color: beige;
+        margin: auto;
+        left: $size / 2;
+        &.active {
+          pointer-events: all;
+          transform: translateY(0);
+        }
+      }
+      &.btn--left {
+        width: $size / 10;
+        left: $size - 30vmin;
+      }
+      &.btn--select {
+        width: $size / 10;
+        left: $size - 20vmin;
+      }
+      &.btn--right {
+        width: $size / 10;
+        left: $size - 10vmin;
+      }
+      &.active {
+        transform: translateY($size / 30);
+        pointer-events: none;
+      }
+    }
+  }
+
+  .clock {
+    z-index: 10;
+    display: flex;
+    width: $size;
+    height: $size / 3;
+    background-color: black;
+    border: 5px solid rgb(78, 78, 78);
+    border-radius: 10px;
+
+    .day {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      color: rgb(37, 37, 37);
+      font: {
+        size: 4vmin;
+        weight: 900;
+      }
+      padding: {
+        top: 1.5vmin;
+        left: 2vmin;
+        bottom: 2vmin;
+      }
+      .active {
+        color: red;
+      }
+    }
+
+    .date-time-wrapper {
+      display: flex;
+      flex-grow: 5;
+      flex-direction: column;
+      justify-content: space-around;
+
+      .date {
+        z-index: 1;
+        align-self: flex-end;
+        font-size: 8vmin;
+        padding: {
+          top: 3vmin;
+          right: 3vmin;
+        }
+        &.alarm {
+          color: rgb(37, 37, 37);
+          span:nth-child(2) {
+            color: red;
+          }
+        }
+        &::before {
+          content: "ON 8888 / 88 / 88";
+          position: absolute;
+          color: rgb(37, 37, 37);
+          align-self: flex-end;
+          font-size: 8vmin;
+          z-index: -1;
+        }
+
+        .toggle-alarm {
+          color: rgb(37, 37, 37);
+          &.select {
+            color: red;
+          }
+          &.active {
+            color: green;
+          }
+        }
+      }
+
+      .time {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        font-size: 20vmin;
+        z-index: 1;
+        &::before {
+          content: "88:88:88";
+          position: absolute;
+          color: rgb(37, 37, 37);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-grow: 1;
+          font-size: 20vmin;
+          z-index: -1;
+        }
+      }
+
+      .alarm__timer {
+        font-family: "digital-clock-font";
+        font-size: 20vmin;
+        display: flex;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        font-size: 20vmin;
+        z-index: 1;
+        &::before {
+          content: "88:88:88";
+          position: absolute;
+          color: rgb(37, 37, 37);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-grow: 1;
+          font-size: 20vmin;
+          z-index: -1;
+        }
+
+        input {
+          pointer-events: none;
+          background-color: rgba(0, 0, 0, 0);
+          border: none;
+          color: red;
+          outline-color: red;
+          width: 18vmin;
+          // caret-color: rgba(0, 0, 0, 0);
+          padding: 0;
+          padding-bottom: -50px;
+          &::placeholder {
+            color: red;
+          }
+          &:focus {
+            animation: blink 0.7s linear infinite;
+            @keyframes blink {
+              from {
+                opacity: 1;
+              }
+              to {
+                opacity: 0;
+              }
+            }
+          }
+          font: {
+            family: "digital-clock-font";
+            size: 20vmin;
+          }
+        }
+      }
+    }
+
+    .select {
+      color: red;
+      animation: blink 1.5s linear infinite;
+      @keyframes blink {
+        0%,
+        49%,
+        100% {
+          opacity: 0;
+        }
+        50%,
+        99% {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .ring {
+    animation: ring 0.3s linear infinite;
+    @keyframes ring {
+      0%,
+      50%,
+      100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-1vmin);
+      }
+      75% {
+        transform: translateX(1vmin);
+      }
+    }
+  }
+}
