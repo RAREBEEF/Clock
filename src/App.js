@@ -199,7 +199,8 @@ export default function App() {
             styles["btn--left"],
             !(show === "alarm") && styles["active"]
           )}
-          onClick={leftClick}
+          onMouseDown={leftClick}
+          onTouchStart={leftClick}
         >
           PREV
         </div>
@@ -219,7 +220,8 @@ export default function App() {
             styles["btn--right"],
             !(show === "alarm") && styles["active"]
           )}
-          onClick={rightClick}
+          onMouseDown={rightClick}
+          onTouchStart={rightClick}
         >
           NEXT
         </div>
