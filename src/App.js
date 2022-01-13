@@ -47,6 +47,7 @@ export default function App() {
       ]);
 
       if (alarm.active) {
+        // eslint-disable-next-line eqeqeq
         if (alarm.h == time[0] && alarm.m == time[1] && alarm.s == time[2]) {
           setAlarm((prevAlarm) => ({ ...prevAlarm, ring: true }));
         }
