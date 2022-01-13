@@ -1,9 +1,10 @@
 import React, { useCallback, useRef, useState } from "react";
 import classNames from "classnames";
 import styles from "./App.module.scss";
-import gsap from "gsap";
+// import gsap from "gsap";
 
 export default function App() {
+  const [vh, setVh] = useState(window.innerHeight * 0.01);
   const [time, setTime] = useState(["00", "00", "00", "0000", "00", "00", "0"]);
   const [show, setShow] = useState("date");
   const [select, setSelect] = useState(3);
@@ -24,6 +25,14 @@ export default function App() {
   const focusRef = useRef();
 
   React.useEffect(() => {
+    const resize = () => {
+      setVh(window.innerHeight * 0.01);
+    };
+
+    window.addEventListener("resize", resize);
+
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+
     const timeUpdate = setInterval(() => {
       const date = new Date();
 
@@ -45,20 +54,21 @@ export default function App() {
     }, 100);
     return () => {
       clearInterval(timeUpdate);
+      window.removeEventListener("resize", resize);
     };
   });
 
-  const clickAnimation = useCallback((e) => {
-    gsap.to(e.target, 0.1, {
-      repeat: 1,
-      yoyo: true,
-      translateY: "10vmin",
-    });
-  }, []);
+  // const clickAnimation = useCallback((e) => {
+  //   gsap.to(e.target, 0.1, {
+  //     repeat: 1,
+  //     yoyo: true,
+  //     translateY: "10vmin",
+  //   });
+  // }, []);
 
   const rightClick = useCallback(
     (e) => {
-      clickAnimation(e);
+      // clickAnimation(e);
 
       setSelect(select === 3 ? 0 : select + 1);
 
@@ -70,12 +80,12 @@ export default function App() {
         setAlarm((prevAlarm) => ({ ...prevAlarm, h: "", m: "", s: "" }));
       }
     },
-    [select, alarm.h, alarm.m, alarm.s, clickAnimation]
+    [select, alarm.h, alarm.m, alarm.s]
   );
 
   const leftClick = useCallback(
     (e) => {
-      clickAnimation(e);
+      // clickAnimation(e);
 
       setSelect(select === 0 ? 3 : select - 1);
 
@@ -87,12 +97,12 @@ export default function App() {
         setAlarm((prevAlarm) => ({ ...prevAlarm, h: "", m: "", s: "" }));
       }
     },
-    [select, alarm.h, alarm.m, alarm.s, clickAnimation]
+    [select, alarm.h, alarm.m, alarm.s]
   );
 
   const selectClick = useCallback(
     (e) => {
-      clickAnimation(e);
+      // clickAnimation(e);
       if (select === 3) {
         setAlarm((prevAlarm) => ({ ...prevAlarm, active: !prevAlarm.active }));
       } else {
@@ -102,7 +112,7 @@ export default function App() {
         select === 2 && setAlarm((prevAlarm) => ({ ...prevAlarm, s: "" }));
       }
     },
-    [select, clickAnimation]
+    [select]
   );
 
   const dateClick = useCallback((e) => {
@@ -142,7 +152,10 @@ export default function App() {
   }, []);
 
   return (
-    <div className={classNames(styles["container"])}>
+    <div
+      className={classNames(styles["container"])}
+      style={{ height: "calc(var(--vh, 1vh) * 100)" }}
+    >
       <div
         className={classNames(
           styles["btn-wrapper"],

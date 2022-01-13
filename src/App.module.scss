@@ -56,14 +56,23 @@ $size: 90vmin;
       &.btn--left {
         width: $size / 10;
         left: $size - 30vmin;
+        &:active {
+          transform: translateY(3vmin);
+        }
       }
       &.btn--select {
         width: $size / 10;
         left: $size - 20vmin;
+        &:active {
+          transform: translateY(3vmin);
+        }
       }
       &.btn--right {
         width: $size / 10;
         left: $size - 10vmin;
+        &:active {
+          transform: translateY(3vmin);
+        }
       }
       &.active {
         transform: translateY($size / 30);
