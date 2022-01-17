@@ -174,12 +174,12 @@ $size: 90vmin;
         font-family: "digital-clock-font";
         font-size: 20vmin;
         display: flex;
-        display: flex;
         justify-content: center;
         align-items: center;
         flex-grow: 1;
         font-size: 20vmin;
         z-index: 1;
+        color: rgb(37, 37, 37);
         &::before {
           content: "88:88:88";
           position: absolute;
@@ -191,8 +191,14 @@ $size: 90vmin;
           font-size: 20vmin;
           z-index: -1;
         }
-
+        &.active {
+          color: red;
+          input {
+            opacity: 1;
+          }
+        }
         input {
+          opacity: 0;
           pointer-events: none;
           background-color: rgba(0, 0, 0, 0);
           border: none;

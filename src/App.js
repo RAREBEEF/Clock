@@ -9,17 +9,11 @@ export default function App() {
   const [show, setShow] = useState("date");
   const [select, setSelect] = useState(3);
   const [alarm, setAlarm] = useState({
-    h:
-      new Date().getHours() < 10
-        ? `0${new Date().getHours()}`
-        : new Date().getHours(),
-    m:
-      new Date().getMinutes() < 10
-        ? `0${new Date().getMinutes()}`
-        : new Date().getMinutes(),
+    h: "",
+    m: "",
     s: "",
-    active: true,
-    ring: true,
+    active: false,
+    ring: false,
   });
 
   const focusRef = useRef();
@@ -71,7 +65,7 @@ export default function App() {
     (e) => {
       // clickAnimation(e);
 
-      setSelect(select === 3 ? 0 : select + 1);
+      alarm.active && setSelect(select === 3 ? 0 : select + 1);
 
       if (
         (parseInt(alarm.h) >= 24) |
@@ -81,14 +75,14 @@ export default function App() {
         setAlarm((prevAlarm) => ({ ...prevAlarm, h: "", m: "", s: "" }));
       }
     },
-    [select, alarm.h, alarm.m, alarm.s]
+    [select, alarm.h, alarm.m, alarm.s, alarm.active]
   );
 
   const leftClick = useCallback(
     (e) => {
       // clickAnimation(e);
 
-      setSelect(select === 0 ? 3 : select - 1);
+      alarm.active && setSelect(select === 0 ? 3 : select - 1);
 
       if (
         (parseInt(alarm.h) >= 24) |
@@ -98,7 +92,7 @@ export default function App() {
         setAlarm((prevAlarm) => ({ ...prevAlarm, h: "", m: "", s: "" }));
       }
     },
-    [select, alarm.h, alarm.m, alarm.s]
+    [select, alarm.h, alarm.m, alarm.s, alarm.active]
   );
 
   const selectClick = useCallback(
@@ -309,7 +303,12 @@ export default function App() {
               {show === "date" && `${time[0]}:${time[1]}:${time[2]}`}
             </div>
           ) : (
-            <div className={styles["alarm__timer"]}>
+            <div
+              className={classNames(
+                styles["alarm__timer"],
+                alarm.active && styles["active"]
+              )}
+            >
               <input
                 className={classNames(select === 0 && styles["select"])}
                 type="text"
