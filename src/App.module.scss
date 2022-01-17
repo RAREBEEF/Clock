@@ -30,6 +30,8 @@ $size: 90vmin;
       position: absolute;
       width: $size / 10;
       height: $size / 20;
+      min-width: 30px;
+      min-height: 15px;
       line-height: $size / 20;
       top: calc(($size / -20) - 3px);
       left: $size / 25;
@@ -63,8 +65,19 @@ $size: 90vmin;
       &.btn--select {
         width: $size / 10;
         left: $size - 20vmin;
+        top: calc(($size / -20) - 33px);
+        background-color: #fff;
         &:active {
           transform: translateY(3vmin);
+        }
+        .click-area {
+          height: 30px;
+          background-color: #fff;
+          cursor: default;
+        }
+        .visible-area {
+          border-radius: 5px 5px 0 0;
+          background-color: rgb(196, 196, 177);
         }
       }
       &.btn--right {
@@ -86,6 +99,8 @@ $size: 90vmin;
     display: flex;
     width: $size;
     height: $size / 3;
+    min-width: 300px;
+    min-height: 100px;
     background-color: black;
     border: 5px solid rgb(78, 78, 78);
     border-radius: 10px;

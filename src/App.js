@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 import classNames from "classnames";
 import styles from "./App.module.scss";
 // import gsap from "gsap";
+import alarmAudioFile from "./audios/alarm-sound.wav";
 
 export default function App() {
   const [vh, setVh] = useState(window.innerHeight * 0.01);
@@ -15,10 +16,12 @@ export default function App() {
     active: false,
     ring: false,
   });
+  const [alarmSound] = useState(new Audio(alarmAudioFile));
 
   const focusRef = useRef();
 
   React.useEffect(() => {
+    alarmSound.loop = true;
     const resize = () => {
       setVh(window.innerHeight * 0.01);
     };
@@ -41,12 +44,20 @@ export default function App() {
       ]);
 
       if (alarm.active) {
-        // eslint-disable-next-line eqeqeq
-        if (alarm.h == time[0] && alarm.m == time[1] && alarm.s == time[2]) {
+        if (
+          // eslint-disable-next-line eqeqeq
+          (alarm.h == time[0]) | (alarm.h == "" && time[0] == "00") &&
+          // eslint-disable-next-line eqeqeq
+          (alarm.m == time[1]) | (alarm.m == "" && time[1] == "00") &&
+          // eslint-disable-next-line eqeqeq
+          (alarm.s == time[2]) | (alarm.s == "" && time[2] == "00")
+        ) {
           setAlarm((prevAlarm) => ({ ...prevAlarm, ring: true }));
+          alarmSound.play();
         }
       }
     }, 100);
+
     return () => {
       clearInterval(timeUpdate);
       window.removeEventListener("resize", resize);
@@ -144,7 +155,9 @@ export default function App() {
 
   const stopRinging = useCallback(() => {
     setAlarm((prevAlarm) => ({ ...prevAlarm, ring: false }));
-  }, []);
+    alarmSound.pause();
+    alarmSound.currentTime = 0;
+  }, [alarmSound]);
 
   return (
     <div
@@ -206,7 +219,8 @@ export default function App() {
           )}
           onClick={selectClick}
         >
-          SELECT
+          <div className={classNames(styles["click-area"])}></div>
+          <div className={classNames(styles["visible-area"])}>SELECT</div>
         </div>
         <div
           className={classNames(
