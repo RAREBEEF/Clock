@@ -1,6 +1,6 @@
 $size: 90vmin;
 @font-face {
-  font-family: "digital-clock-font";
+  font-family: "liquid_crystal-font";
   src: url("./fonts/digital-7\ \(mono\).ttf");
 }
 .container {
@@ -9,10 +9,10 @@ $size: 90vmin;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  min-width: 307px;
+  // min-width: 307px;
   color: red;
   font: {
-    family: "digital-clock-font";
+    family: "liquid_crystal-font";
   }
 
   .btn-wrapper {
@@ -30,8 +30,8 @@ $size: 90vmin;
       position: absolute;
       width: $size / 10;
       height: $size / 20;
-      min-width: 30px;
-      min-height: 15px;
+      // min-width: 30px;
+      // min-height: 15px;
       line-height: $size / 20;
       top: calc(($size / -20) - 3px);
       left: $size / 25;
@@ -99,8 +99,8 @@ $size: 90vmin;
     display: flex;
     width: $size;
     height: $size / 3;
-    min-width: 300px;
-    min-height: 100px;
+    // min-width: 300px;
+    // min-height: 100px;
     background-color: black;
     border: 5px solid rgb(78, 78, 78);
     border-radius: 10px;
@@ -186,7 +186,7 @@ $size: 90vmin;
       }
 
       .alarm__timer {
-        font-family: "digital-clock-font";
+        font-family: "liquid_crystal-font";
         font-size: 20vmin;
         display: flex;
         justify-content: center;
@@ -237,7 +237,7 @@ $size: 90vmin;
             }
           }
           font: {
-            family: "digital-clock-font";
+            family: "liquid_crystal-font";
             size: 20vmin;
           }
         }
@@ -274,6 +274,69 @@ $size: 90vmin;
       }
       75% {
         transform: translateX(1vmin);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .clock {
+    width: 306px !important;
+    height: 102px !important;
+    .day {
+      font-size: 13px !important;
+    }
+    .date-time-wrapper {
+      width: 280px;
+      height: 102px;
+      .date,
+      .date::before {
+        font-size: 27px !important;
+      }
+      .time,
+      .time::before {
+        font-size: 68px !important;
+      }
+    }
+    .alarm__timer {
+      width: 281px !important;
+      height: 68px !important;
+      font-size: 68px !important;
+      &::before {
+        font-size: 68px !important;
+      }
+      input {
+        width: 61px !important;
+        height: 61px !important;
+        font-size: 68px !important;
+      }
+    }
+  }
+  .btn-wrapper {
+    left: -306px !important;
+    bottom: 102px !important;
+    .btn {
+      left: 12px !important;
+      width: 30px !important;
+      height: 15px !important;
+      font-size: 10px !important;
+      line-height: 15px !important;
+      top: -18px !important;
+      &.btn--alarm {
+        left: 49px !important;
+      }
+      &.btn--alarm-off {
+        left: 153px !important;
+      }
+      &.btn--left {
+        left: 204px !important;
+      }
+      &.btn--select {
+        left: 238px !important;
+        top: -48px !important;
+      }
+      &.btn--right {
+        left: 272px !important;
       }
     }
   }
