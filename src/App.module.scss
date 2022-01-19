@@ -49,7 +49,7 @@ $size: 90vmin;
         left: $size / 2;
         &.active {
           pointer-events: all;
-          transform: translateY(0);
+          transform: translateY(0) !important;
         }
       }
       &.btn--prev {
