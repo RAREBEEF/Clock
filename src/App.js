@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import classNames from "classnames";
 import styles from "./App.module.scss";
-// import gsap from "gsap";
+import gsap from "gsap";
 import alarmAudioFile from "./audios/alarm-sound.wav";
 
 export default function App() {
@@ -64,17 +64,17 @@ export default function App() {
     };
   });
 
-  // const clickAnimation = useCallback((e) => {
-  //   gsap.to(e.target, 0.1, {
-  //     repeat: 1,
-  //     yoyo: true,
-  //     translateY: "10vmin",
-  //   });
-  // }, []);
+  const clickAnimation = useCallback((e) => {
+    gsap.to(e.target, 0.1, {
+      repeat: 1,
+      yoyo: true,
+      translateY: "10vmin",
+    });
+  }, []);
 
-  const rightClick = useCallback(
+  const nextClick = useCallback(
     (e) => {
-      // clickAnimation(e);
+      clickAnimation(e);
 
       alarm.active && setSelect(select === 3 ? 0 : select + 1);
 
@@ -86,12 +86,12 @@ export default function App() {
         setAlarm((prevAlarm) => ({ ...prevAlarm, h: "", m: "", s: "" }));
       }
     },
-    [select, alarm.h, alarm.m, alarm.s, alarm.active]
+    [select, alarm.h, alarm.m, alarm.s, alarm.active, clickAnimation]
   );
 
-  const leftClick = useCallback(
+  const prevClick = useCallback(
     (e) => {
-      // clickAnimation(e);
+      clickAnimation(e);
 
       alarm.active && setSelect(select === 0 ? 3 : select - 1);
 
@@ -103,12 +103,12 @@ export default function App() {
         setAlarm((prevAlarm) => ({ ...prevAlarm, h: "", m: "", s: "" }));
       }
     },
-    [select, alarm.h, alarm.m, alarm.s, alarm.active]
+    [select, alarm.h, alarm.m, alarm.s, alarm.active, clickAnimation]
   );
 
   const selectClick = useCallback(
     (e) => {
-      // clickAnimation(e);
+      clickAnimation(e);
       if (select === 3) {
         setAlarm((prevAlarm) => ({ ...prevAlarm, active: !prevAlarm.active }));
       } else {
@@ -118,7 +118,7 @@ export default function App() {
         select === 2 && setAlarm((prevAlarm) => ({ ...prevAlarm, s: "" }));
       }
     },
-    [select]
+    [select, clickAnimation]
   );
 
   const dateClick = useCallback((e) => {
@@ -203,11 +203,10 @@ export default function App() {
         <div
           className={classNames(
             styles["btn"],
-            styles["btn--left"],
+            styles["btn--prev"],
             !(show === "alarm") && styles["active"]
           )}
-          onMouseDown={leftClick}
-          onTouchStart={leftClick}
+          onClick={prevClick}
         >
           PREV
         </div>
@@ -219,17 +218,15 @@ export default function App() {
           )}
           onClick={selectClick}
         >
-          <div className={classNames(styles["click-area"])}></div>
-          <div className={classNames(styles["visible-area"])}>SELECT</div>
+          SELECT
         </div>
         <div
           className={classNames(
             styles["btn"],
-            styles["btn--right"],
+            styles["btn--next"],
             !(show === "alarm") && styles["active"]
           )}
-          onMouseDown={rightClick}
-          onTouchStart={rightClick}
+          onClick={nextClick}
         >
           NEXT
         </div>
